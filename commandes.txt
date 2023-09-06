@@ -1,0 +1,37 @@
+utilisateur: ipsl2022 || pass: passer
+
+utilisateur: mike || pass: flexzone
+
+
+mysql -u root -p
+
+create user 'ipsl2022'@'localhost' identified by 'passer';
+
+grant all privileges on *.* to 'e-learning'@'localhost';
+
+
+create database compte;
+
+use compte;
+
+create table etudiant(codeEtudiant int primary key, niveauEtudiant varchar(120));
+
+describe etudiant;
+start transaction --------- commit ------- rollback 
+set autocommit = false; ( permet d'etre toujours dans la mémoire transactionnelle)
+savepoint p1; (pour sauvegarde groupé sur la mémoire transactionnelle)
+rollback to p2; (annuler à partir d'une groupe bien donnée)
+set transaction isolation level read uncommitted; (Modifier son niveau d'isolation pour voir tous les changements dans la base de transaction)
+set transaction isolation level read committed; (Modifier son niveau d'isolation pour voir tous les changements commités)
+
+alter table professeur add idPersonne int;
+
+alter table etudiant add constraint FK_etudiant_p foreign key (idPersonne) references personne(idPersonne);
+
+alter table formation change dureeFormation dureeFormation varchar(120);
+
+insert into personne(idPersonne, prenom, nom, sexe) values (1, 'Michel','Nassalang','masculin');
+
+Jointure ----- select personne.prenom, etudiant.niveau, materiel.libelle from personne, etudiant, materiel where personne.idClasse= 3 and ...; 
+
+Création de view  : create(or replace) view nom_view as requete(select ...)
